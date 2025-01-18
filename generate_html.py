@@ -1,17 +1,19 @@
 import feedparser
 from jinja2 import Template
 
-# RSSフィードを取得
+# RSSフィードのURL
 RSS_URL = "https://www.maff.go.jp/j/press/rss.xml"
+
+# RSSフィードを取得
 feed = feedparser.parse(RSS_URL)
 
-# ニュースデータを整形
+# ニュースリストを作成
 news_list = []
-for entry in feed.entries[:5]:
+for entry in feed.entries[:5]:  # 最新5件
     news_list.append({
-        "title": entry.title,
-        "summary": entry.summary,
-        "link": entry.link
+        "title": entry.title if hasattr(entry, 'title') else "タイトルなし",
+        "summary": entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else "概要なし",
+        "link": entry.link if hasattr(entry, 'link') else "#"
     })
 
 # HTMLテンプレート
@@ -45,10 +47,12 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# HTMLを生成
+# テンプレートをレンダリング
 template = Template(HTML_TEMPLATE)
 html_content = template.render(news_list=news_list)
 
 # HTMLを保存
 with open("index.html", "w", encoding="utf-8") as file:
     file.write(html_content)
+
+print("HTMLファイルを生成しました: index.html")
