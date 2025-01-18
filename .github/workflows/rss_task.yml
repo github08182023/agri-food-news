@@ -15,7 +15,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages  # 必須の設定
+      name: github-pages  # GitHub Pages用の環境を設定
 
     steps:
       - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './output'  # outputディレクトリを指定
+          path: './output'  # outputディレクトリをアップロード
 
       - name: Deploy to GitHub Pages
         id: deployment
