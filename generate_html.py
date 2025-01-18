@@ -1,18 +1,16 @@
+import os
 import feedparser
 from jinja2 import Template
-import os
+
+# 必要なディレクトリを作成
+output_dir = "output"
+os.makedirs(output_dir, exist_ok=True)
 
 # RSSフィードのURL
 RSS_URL = "https://www.maff.go.jp/j/press/rss.xml"
 
 # RSSフィードを取得
-try:
-    feed = feedparser.parse(RSS_URL)
-    if not feed.entries:
-        raise ValueError("RSSフィードにエントリが存在しません。")
-except Exception as e:
-    print(f"RSSフィードの取得に失敗しました: {e}")
-    exit(1)
+feed = feedparser.parse(RSS_URL)
 
 # ニュースリストを作成
 news_list = []
@@ -55,18 +53,12 @@ HTML_TEMPLATE = """
 """
 
 # テンプレートをレンダリング
-try:
-    template = Template(HTML_TEMPLATE)
-    html_content = template.render(news_list=news_list)
+template = Template(HTML_TEMPLATE)
+html_content = template.render(news_list=news_list)
 
-    # 必要ならディレクトリを作成
-    os.makedirs("output", exist_ok=True)
-    
-    # HTMLを保存
-    with open("index.html", "w", encoding="utf-8") as file:
-        file.write(html_content)
+# HTMLを保存
+output_path = os.path.join(output_dir, "index.html")
+with open(output_path, "w", encoding="utf-8") as file:
+    file.write(html_content)
 
-    print("HTMLファイルを生成しました: index.html")
-except Exception as e:
-    print(f"HTMLファイルの生成に失敗しました: {e}")
-    exit(1)
+print(f"HTMLファイルを生成しました: {output_path}")
