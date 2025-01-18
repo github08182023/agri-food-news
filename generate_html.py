@@ -9,11 +9,11 @@ feed = feedparser.parse(RSS_URL)
 
 # ニュースリストを作成
 news_list = []
-for entry in feed.entries[:5]:  # 最新5件を取得
+for entry in feed.entries[:5]:  # 最新5件
     news_list.append({
-        "title": getattr(entry, "title", "タイトルなし"),  # タイトルがない場合のデフォルト値
-        "summary": getattr(entry, "summary", getattr(entry, "description", "概要なし")),  # summaryがない場合にdescriptionを使う
-        "link": getattr(entry, "link", "#")  # リンクがない場合のデフォルト値
+        "title": entry.title,  # タイトル
+        "link": entry.link,    # 記事のリンク
+        "published": entry.published,  # 公開日
     })
 
 # HTMLテンプレート
@@ -38,7 +38,7 @@ HTML_TEMPLATE = """
         {% for news in news_list %}
         <div class="news-item">
             <h2>{{ news.title }}</h2>
-            <p>{{ news.summary }}</p>
+            <p>公開日: {{ news.published }}</p>
             <a href="{{ news.link }}" target="_blank">続きを読む</a>
         </div>
         {% endfor %}
