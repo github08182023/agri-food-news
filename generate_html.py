@@ -9,11 +9,11 @@ feed = feedparser.parse(RSS_URL)
 
 # ニュースリストを作成
 news_list = []
-for entry in feed.entries[:5]:  # 最新5件
+for entry in feed.entries[:5]:  # 最新5件を取得
     news_list.append({
-        "title": entry.title if hasattr(entry, 'title') else "タイトルなし",
-        "summary": entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else "概要なし",
-        "link": entry.link if hasattr(entry, 'link') else "#"
+        "title": getattr(entry, "title", "タイトルなし"),  # タイトルがない場合のデフォルト値
+        "summary": getattr(entry, "summary", getattr(entry, "description", "概要なし")),  # summaryがない場合にdescriptionを使う
+        "link": getattr(entry, "link", "#")  # リンクがない場合のデフォルト値
     })
 
 # HTMLテンプレート
