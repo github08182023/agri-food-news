@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './index.html'  # 必要なファイルだけを指定
+          path: './output'  # outputディレクトリを指定
 
       - name: Deploy to GitHub Pages
         id: deployment
