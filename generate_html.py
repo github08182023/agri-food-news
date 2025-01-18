@@ -1,5 +1,6 @@
 import feedparser
 from jinja2 import Template
+import os
 
 # RSSフィードのURL
 RSS_URL = "https://www.maff.go.jp/j/press/rss.xml"
@@ -58,6 +59,9 @@ try:
     template = Template(HTML_TEMPLATE)
     html_content = template.render(news_list=news_list)
 
+    # 必要ならディレクトリを作成
+    os.makedirs("output", exist_ok=True)
+    
     # HTMLを保存
     with open("index.html", "w", encoding="utf-8") as file:
         file.write(html_content)
