@@ -5,15 +5,21 @@ from jinja2 import Template
 RSS_URL = "https://www.maff.go.jp/j/press/rss.xml"
 
 # RSSフィードを取得
-feed = feedparser.parse(RSS_URL)
+try:
+    feed = feedparser.parse(RSS_URL)
+    if not feed.entries:
+        raise ValueError("RSSフィードにエントリが存在しません。")
+except Exception as e:
+    print(f"RSSフィードの取得に失敗しました: {e}")
+    exit(1)
 
 # ニュースリストを作成
 news_list = []
 for entry in feed.entries[:5]:  # 最新5件
     news_list.append({
-        "title": entry.title,  # タイトル
-        "link": entry.link,    # 記事のリンク
-        "published": entry.published,  # 公開日
+        "title": entry.title,
+        "link": entry.link,
+        "published": entry.get("published", "日付不明"),
     })
 
 # HTMLテンプレート
@@ -48,11 +54,15 @@ HTML_TEMPLATE = """
 """
 
 # テンプレートをレンダリング
-template = Template(HTML_TEMPLATE)
-html_content = template.render(news_list=news_list)
+try:
+    template = Template(HTML_TEMPLATE)
+    html_content = template.render(news_list=news_list)
 
-# HTMLを保存
-with open("index.html", "w", encoding="utf-8") as file:
-    file.write(html_content)
+    # HTMLを保存
+    with open("index.html", "w", encoding="utf-8") as file:
+        file.write(html_content)
 
-print("HTMLファイルを生成しました: index.html")
+    print("HTMLファイルを生成しました: index.html")
+except Exception as e:
+    print(f"HTMLファイルの生成に失敗しました: {e}")
+    exit(1)
