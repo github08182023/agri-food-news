@@ -1,0 +1,32 @@
+name: Generate and Deploy RSS News
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 毎日朝7時
+    - cron: '50 11 * * *' # 毎日11:50
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install feedparser jinja2
+
+      - name: Generate HTML
+        run: python generate_html.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .  # index.htmlが保存されているディレクトリ
