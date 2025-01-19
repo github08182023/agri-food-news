@@ -6,55 +6,99 @@ from jinja2 import Template
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
-# RSSフィードのURL
-RSS_URL = "https://www.maff.go.jp/j/press/rss.xml"
+# RSSフィードのカテゴリ分け
+RSS_FEEDS = {
+    "ビジネスニュース": [
+        {"name": "Forbes JAPAN", "url": "https://news.yahoo.co.jp/rss/media/forbes/all.xml"},
+        {"name": "日経ビジネス", "url": "https://news.yahoo.co.jp/rss/media/business/all.xml"},
+    ],
+    "食品関連": [
+        {"name": "食品新聞", "url": "https://news.yahoo.co.jp/rss/media/shokuhin/all.xml"},
+        {"name": "食品産業新聞社", "url": "https://news.yahoo.co.jp/rss/media/ssnp/all.xml"},
+        {"name": "日本食糧新聞", "url": "https://news.yahoo.co.jp/rss/media/nissyoku/all.xml"},
+    ],
+    "農業関連": [
+        {"name": "日本農業新聞", "url": "https://news.yahoo.co.jp/rss/media/agrinews/all.xml"},
+        {"name": "農水省", "url": "https://www.maff.go.jp/j/press/rss.xml"},
+        {"name": "岩手県農業", "url": "https://www.pref.iwate.jp/agri/i-agri/feed.rss"},
+        {"name": "農研機構", "url": "https://www.naro.go.jp/PUBLICITY_REPORT/press/top_new_feed.xml"},
+    ],
+    "科学技術": [
+        {"name": "東京農工大学 研究", "url": "http://www.tuat.ac.jp/NEWS/research/rss.xml"},
+        {"name": "農林水産技術会議", "url": "https://www.affrc.maff.go.jp/rss.xml"},
+        {"name": "森林総合研究所", "url": "https://www.ffpri.affrc.go.jp/ffpri-chumokujoho.xml"},
+    ],
+    "国際ニュース": [
+        {"name": "BBC News", "url": "https://news.yahoo.co.jp/rss/media/bbc/all.xml"},
+        {"name": "sorae 宇宙ニュース", "url": "https://news.yahoo.co.jp/rss/media/sorae_jp/all.xml"},
+    ]
+}
 
-# RSSフィードを取得
-feed = feedparser.parse(RSS_URL)
+# ニュースデータをカテゴリごとに収集
+all_news = {}
 
-# ニュースリストを作成
-news_list = []
-for entry in feed.entries[:5]:  # 最新5件
-    news_list.append({
-        "title": entry.title,
-        "link": entry.link,
-        "published": entry.get("published", "日付不明"),
-    })
+for category, feeds in RSS_FEEDS.items():
+    all_news[category] = []
+    for feed in feeds:
+        rss_feed = feedparser.parse(feed["url"])
+        for entry in rss_feed.entries[:5]:  # 各RSSフィードから最新5件を取得
+            all_news[category].append({
+                "source": feed["name"],
+                "title": entry.title,
+                "link": entry.link,
+                "published": entry.get("published", "日付不明"),
+            })
 
-# HTMLテンプレート
+# HTMLテンプレート（カテゴリ分け＆多くの情報を表示）
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>農水省ニュース</title>
+    <title>RSSニュースダッシュボード</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-        h1 { color: #2c3e50; }
-        .news-item { margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ddd; }
+        h1 { color: #2c3e50; text-align: center; }
+        .category { margin-bottom: 40px; }
+        .news-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .news-item {
+            flex: 1 1 calc(33% - 20px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        .news-item h2 { font-size: 1.2em; color: #3498db; }
+        .news-item p { margin: 5px 0; font-size: 0.9em; color: #666; }
+        .source { font-size: 0.9em; color: #888; }
         a { color: #3498db; text-decoration: none; }
         a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <h1>農水省 最新ニュース</h1>
-    <div id="news-container">
-        {% for news in news_list %}
-        <div class="news-item">
-            <h2>{{ news.title }}</h2>
-            <p>公開日: {{ news.published }}</p>
-            <a href="{{ news.link }}" target="_blank">続きを読む</a>
+    <h1>RSSニュースダッシュボード</h1>
+    {% for category, news_items in all_news.items() %}
+        <div class="category">
+            <h2>{{ category }}</h2>
+            <div class="news-container">
+                {% for news in news_items %}
+                <div class="news-item">
+                    <h2>{{ news.title }}</h2>
+                    <p class="source">提供元: {{ news.source }}</p>
+                    <p>公開日: {{ news.published }}</p>
+                    <a href="{{ news.link }}" target="_blank">続きを読む</a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
 </body>
 </html>
 """
 
 # テンプレートをレンダリング
 template = Template(HTML_TEMPLATE)
-html_content = template.render(news_list=news_list)
+html_content = template.render(all_news=all_news)
 
 # HTMLを保存
 output_path = os.path.join(output_dir, "index.html")
