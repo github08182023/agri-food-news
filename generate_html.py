@@ -64,7 +64,7 @@ HTML_TEMPLATE = """
             border-top: solid 1px #red;
             border-bottom: solid 1px #red;
             padding: 5px 10px;
-            width: 50%;
+            width: 100%;
         }
         .news-item h2 { font-size: .9em; color: #3498db; }
         .news-item p { margin: 5px 0; font-size: 0.8em; color: #666; }
