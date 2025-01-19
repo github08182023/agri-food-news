@@ -2,9 +2,9 @@ name: Generate and Deploy RSS News
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 日本時間では、朝の7時。おそらく、世界標準時になっている。
-    - cron: '55 2 * * *' # 毎日11:55
-    - cron: '29 9 * * *' # 毎日18:29
+    - cron: '0 7 * * *'  # 日本時間では、朝の7時。
+    - cron: '55 11 * * *' # 毎日11:55
+    - cron: '34 18 * * *' # 毎日18:34
   workflow_dispatch: # 手動実行も可能
 
 permissions:
