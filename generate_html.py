@@ -60,13 +60,13 @@ HTML_TEMPLATE = """
         .category { margin-bottom: 40px; }
         .news-container { display: flex; flex-wrap: wrap; gap: 20px; }
         .news-item {
-            flex: 1 1 calc(33% - 20px);
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 15px;
             background: #f9f9f9;
+            border-top: solid 1px #red;
+            border-bottom: solid 1px #red;
+            padding: 5px 10px;
         }
-        .news-item h2 { font-size: 1.2em; color: #3498db; }
-        .news-item p { margin: 5px 0; font-size: 0.9em; color: #666; }
+        .news-item h2 { font-size: .9em; color: #3498db; }
+        .news-item p { margin: 5px 0; font-size: 0.8em; color: #666; }
         .source { font-size: 0.9em; color: #888; }
         a { color: #3498db; text-decoration: none; }
         a:hover { text-decoration: underline; }
