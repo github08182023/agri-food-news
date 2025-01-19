@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 7 * * *'   # 毎日朝7時
     - cron: '50 11 * * *' # 毎日11:50
+    - cron: '22 18 * * *' # 毎日18:22
   workflow_dispatch: # 手動実行も可能
 
 permissions:
