@@ -8,28 +8,25 @@ os.makedirs(output_dir, exist_ok=True)
 
 # RSSフィードのカテゴリ分け
 RSS_FEEDS = {
-    "ビジネスニュース": [
+    "ビジネス・国際": [
+        {"name": "BBC News", "url": "https://news.yahoo.co.jp/rss/media/bbc/all.xml"},
         {"name": "Forbes JAPAN", "url": "https://news.yahoo.co.jp/rss/media/forbes/all.xml"},
         {"name": "日経ビジネス", "url": "https://news.yahoo.co.jp/rss/media/business/all.xml"},
     ],
-    "食品関連": [
+    "食": [
         {"name": "食品新聞", "url": "https://news.yahoo.co.jp/rss/media/shokuhin/all.xml"},
         {"name": "食品産業新聞社", "url": "https://news.yahoo.co.jp/rss/media/ssnp/all.xml"},
         {"name": "日本食糧新聞", "url": "https://news.yahoo.co.jp/rss/media/nissyoku/all.xml"},
     ],
-    "農業関連": [
+    "農業": [
         {"name": "日本農業新聞", "url": "https://news.yahoo.co.jp/rss/media/agrinews/all.xml"},
         {"name": "農水省", "url": "https://www.maff.go.jp/j/press/rss.xml"},
-        {"name": "岩手県農業", "url": "https://www.pref.iwate.jp/agri/i-agri/feed.rss"},
         {"name": "農研機構", "url": "https://www.naro.go.jp/PUBLICITY_REPORT/press/top_new_feed.xml"},
-    ],
-    "科学技術": [
         {"name": "東京農工大学 研究", "url": "http://www.tuat.ac.jp/NEWS/research/rss.xml"},
         {"name": "農林水産技術会議", "url": "https://www.affrc.maff.go.jp/rss.xml"},
         {"name": "森林総合研究所", "url": "https://www.ffpri.affrc.go.jp/ffpri-chumokujoho.xml"},
     ],
-    "国際ニュース": [
-        {"name": "BBC News", "url": "https://news.yahoo.co.jp/rss/media/bbc/all.xml"},
+    "宇宙": [
         {"name": "sorae 宇宙ニュース", "url": "https://news.yahoo.co.jp/rss/media/sorae_jp/all.xml"},
     ]
 }
