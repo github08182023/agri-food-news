@@ -8,16 +8,6 @@ os.makedirs(output_dir, exist_ok=True)
 
 # RSSフィードのカテゴリ分け
 RSS_FEEDS = {
-    "ビジネス・国際": [
-        {"name": "BBC News", "url": "https://news.yahoo.co.jp/rss/media/bbc/all.xml"},
-        {"name": "Forbes JAPAN", "url": "https://news.yahoo.co.jp/rss/media/forbes/all.xml"},
-        {"name": "日経ビジネス", "url": "https://news.yahoo.co.jp/rss/media/business/all.xml"},
-    ],
-    "食": [
-        {"name": "食品新聞", "url": "https://news.yahoo.co.jp/rss/media/shokuhin/all.xml"},
-        {"name": "食品産業新聞社", "url": "https://news.yahoo.co.jp/rss/media/ssnp/all.xml"},
-        {"name": "日本食糧新聞", "url": "https://news.yahoo.co.jp/rss/media/nissyoku/all.xml"},
-    ],
     "農業": [
         {"name": "日本農業新聞", "url": "https://news.yahoo.co.jp/rss/media/agrinews/all.xml"},
         {"name": "農水省", "url": "https://www.maff.go.jp/j/press/rss.xml"},
@@ -26,9 +16,19 @@ RSS_FEEDS = {
         {"name": "農林水産技術会議", "url": "https://www.affrc.maff.go.jp/rss.xml"},
         {"name": "森林総合研究所", "url": "https://www.ffpri.affrc.go.jp/ffpri-chumokujoho.xml"},
     ],
+    "ビジネス・国際": [
+        {"name": "BBC News", "url": "https://news.yahoo.co.jp/rss/media/bbc/all.xml"},
+        {"name": "Forbes JAPAN", "url": "https://news.yahoo.co.jp/rss/media/forbes/all.xml"},
+        {"name": "日経ビジネス", "url": "https://news.yahoo.co.jp/rss/media/business/all.xml"},
+    ],
     "宇宙": [
         {"name": "sorae 宇宙ニュース", "url": "https://news.yahoo.co.jp/rss/media/sorae_jp/all.xml"},
     ]
+    "食": [
+        {"name": "食品新聞", "url": "https://news.yahoo.co.jp/rss/media/shokuhin/all.xml"},
+        {"name": "食品産業新聞社", "url": "https://news.yahoo.co.jp/rss/media/ssnp/all.xml"},
+        {"name": "日本食糧新聞", "url": "https://news.yahoo.co.jp/rss/media/nissyoku/all.xml"},
+    ],
 }
 
 # ニュースデータをカテゴリごとに収集
@@ -53,17 +53,18 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSSニュースダッシュボード</title>
+    <title>MYダッシュボード</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
         h1 { color: #2c3e50; text-align: center; }
-        .category { margin-bottom: 40px; }
-        .news-container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .category { margin-bottom: 20px; }
+        .news-container { gap: 20px; }
         .news-item {
             background: #f9f9f9;
             border-top: solid 1px #red;
             border-bottom: solid 1px #red;
             padding: 5px 10px;
+            width: 50%;
         }
         .news-item h2 { font-size: .9em; color: #3498db; }
         .news-item p { margin: 5px 0; font-size: 0.8em; color: #666; }
