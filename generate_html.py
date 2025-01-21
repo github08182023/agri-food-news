@@ -23,12 +23,12 @@ RSS_FEEDS = {
     ],
     "宇宙": [
         {"name": "sorae 宇宙ニュース", "url": "https://news.yahoo.co.jp/rss/media/sorae_jp/all.xml"},
-    ]
+    ],
     "食": [
         {"name": "食品新聞", "url": "https://news.yahoo.co.jp/rss/media/shokuhin/all.xml"},
         {"name": "食品産業新聞社", "url": "https://news.yahoo.co.jp/rss/media/ssnp/all.xml"},
         {"name": "日本食糧新聞", "url": "https://news.yahoo.co.jp/rss/media/nissyoku/all.xml"},
-    ],
+    ]
 }
 
 # ニュースデータをカテゴリごとに収集
