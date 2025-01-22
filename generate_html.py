@@ -54,24 +54,25 @@ HTML_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYダッシュボード</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
-        h1 { color: #2c3e50; text-align: center; }
-        .category { margin-bottom: 20px; }
-        .news-container { gap: 20px; }
-        .news-item {
-            background: #f9f9f9;
-            border-top: solid 1px #red;
-            border-bottom: solid 1px #red;
-            padding: 5px 10px;
-            width: 100%;
-        }
-        .news-item h2 { font-size: .9em; color: #3498db; }
-        .news-item p { margin: 5px 0; font-size: 0.8em; color: #666; }
-        .source { font-size: 0.9em; color: #888; }
-        a { color: #3498db; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
+    h1 { color: #2c3e50; text-align: center; }
+    .category { margin-bottom: 20px; }
+    .news-container { gap: 20px; }
+    .news-item {
+        background: #f9f9f9;
+        border-top: solid 1px #red;
+        border-bottom: solid 1px #red;
+        padding: 5px 10px;
+        width: 100%;
+    }
+    .news-item h2 { font-size: .9em; color: #3498db; }
+    .news-item p { margin: 5px 0; font-size: 0.8em; color: #666; }
+    .source { font-size: 0.9em; color: #888; }
+    a { color: #3498db; text-decoration: none; }
+    a:visited { color: #888; background-color: #e0e0e0; } /* 訪問済みリンクのスタイル */
+    a:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
     <h1>RSSニュースダッシュボード</h1>
